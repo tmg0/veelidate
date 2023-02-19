@@ -2,7 +2,7 @@ import { FieldValidate } from './enums'
 import { Field, isField } from './field'
 import { isNumber, isString, isUndefined, mapValues } from './utils'
 
-type ValidatorFields<T> = { [P in keyof T]: T[P] extends Field ? T[P]['value'] : T[P] extends Validator<any> ? ValidatorFields<T[P]> : any }
+export type ValidatorFields<T> = { [P in keyof T]: T[P] extends Field ? T[P]['value'] : T[P] extends Validator<any> ? ValidatorFields<T[P]> : any }
 
 export const isValidator = (value: any): value is Validator<any> => value.constructor === Validator
 
