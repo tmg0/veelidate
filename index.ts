@@ -1,4 +1,4 @@
-import { Validator, type ValidatorFields } from './src/validator'
+import { Validator, ValidatorFields } from './src/validator'
 import { Field } from './src/field'
 
 const defineValidator = () => ({
