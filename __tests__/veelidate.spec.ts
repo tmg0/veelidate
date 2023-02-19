@@ -4,11 +4,11 @@ import { describe, expect, test } from 'vitest'
 import { defineValidator, defineField } from '..'
 
 const validator = defineValidator().setup(() => ({
-  stringField: defineField('').isString(),
-  numberField: defineField(0).isNumber(),
+  stringField: defineField<string>().isString(),
+  numberField: defineField<number>().isNumber(),
   objectField: defineValidator().setup(() => ({
-    strF: defineField('').isString(),
-    numF: defineField(0).isNumber()
+    strF: defineField<string>().isString(),
+    numF: defineField<number>().isNumber()
   }))
 }))
 
@@ -26,7 +26,7 @@ const parseValidateResult = async (validator: { validate: () => Promise<void> })
 
 describe('define validator', () => {
   test('should check default value', async () => {
-    expect(await parseValidateResult(validator)).toBe(true)
+    expect(await parseValidateResult(validator)).toBe(false)
   })
 
   test('should check string type field', async () => {

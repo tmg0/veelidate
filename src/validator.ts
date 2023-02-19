@@ -1,6 +1,6 @@
 import { FieldValidate } from './enums'
 import { Field, isField } from './field'
-import { isNumber, isString, mapValues } from './utils'
+import { isNumber, isString, isUndefined, mapValues } from './utils'
 
 type ValidatorFields<T> = { [P in keyof T]: T[P] extends Field ? T[P]['value'] : T[P] extends Validator<any> ? ValidatorFields<T[P]> : any }
 
@@ -12,7 +12,8 @@ export const validatorPolicy: Record<FieldValidate, (params: Field) => boolean> 
   isArray: (field: Field) => !!field,
   min: (field: Field) => !!(field && isNumber(field.value) && field.value > Number(field._min)),
   max: (field: Field) => !!(field && isNumber(field.value) && field.value < Number(field._max)),
-  maxLength: (field: Field) => validatorPolicy.isArray(field.value) && field.value.length < Number(field._maxLength)
+  maxLength: (field: Field) => validatorPolicy.isArray(field.value) && field.value.length < Number(field._maxLength),
+  required: (field: Field) => isUndefined(field.value)
 }
 
 export const validateFeilds = <T extends Record<string, any>>(fields: T): Promise<void> => {

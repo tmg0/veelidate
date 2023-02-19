@@ -4,5 +4,6 @@ export enum FieldValidate {
   MIN = 'min',
   MAX = 'max',
   MAX_LENGTH = 'maxLength',
-  IS_ARRAY = 'isArray'
+  IS_ARRAY = 'isArray',
+  REQUIRED = 'required'
 }

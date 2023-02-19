@@ -9,8 +9,13 @@ export class Field<T = any> {
   public _max?: number
   public _maxLength?: number
 
-  constructor (value: any) {
+  constructor (value?: any) {
     this.value = value
+  }
+
+  required () {
+    this.chains.push(FieldValidate.REQUIRED)
+    return this
   }
 
   isString () {
