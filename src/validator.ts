@@ -66,8 +66,8 @@ export class Validator<T extends Record<string, any>> {
     })
 
     return new Proxy(fields as ValidatorFields<T>, {
-      get: (_, key: string) => {
-        return this._fields[key]
+      get: (target, key: string) => {
+        return target[key]
       },
       set: (target: Record<string, any>, key: string, value) => {
         target[key] = value
