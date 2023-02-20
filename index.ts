@@ -1,9 +1,23 @@
+import forIn from 'lodash.forin'
+import setWith from 'lodash.setwith'
 import { Validator, ValidatorFields } from './src/validator'
 import { Field } from './src/field'
 
+const isValue = (value: string): value is 'value' => value === 'value'
+
 const defineValidator = () => ({
   setup<T extends Record<string, any>> (getter: () => T) {
-    return new Validator(getter)
+    return new Proxy(new Validator(getter), {
+      set (target: Record<string, any>, key: string, value) {
+        if (!isValue(key)) { return true }
+
+        forIn(value, (v, key: string) => {
+          setWith(target.value, key, v)
+        })
+
+        return true
+      }
+    })
   }
 })
 

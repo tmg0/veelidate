@@ -3,9 +3,15 @@ lockfileVersion: 5.4
 specifiers:
   '@nuxtjs/eslint-config-typescript': ^12.0.0
   eslint: ^8.34.0
+  lodash.forin: ^4.4.0
+  lodash.setwith: ^4.3.2
   tsup: ^6.6.3
   typescript: ^4.9.5
   vitest: ^0.28.5
+
+dependencies:
+  lodash.forin: 4.4.0
+  lodash.setwith: 4.3.2
 
 devDependencies:
   '@nuxtjs/eslint-config-typescript': 12.0.0_7kw3g6rralp5ps6mg3uyzz6azm
@@ -2203,9 +2209,17 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash.forin/4.4.0:
+    resolution: {integrity: sha512-APldePP4yvGhMcplVxv9L+exdLHMRHRhH1Q9O70zRJMm9HbTm6zxaihXtNl+ICOBApeFWoH7jNmFr/L4XfWeiQ==}
+    dev: false
+
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
+
+  /lodash.setwith/4.3.2:
+    resolution: {integrity: sha512-Cv2pndcuNDaqDMJ0gbLm5qNG5jyfsL6f8+f5PfZVVNhQCv+y+P5gAKkCdZbtiQlux7nsnWF7UmZd8JEFIo/4tg==}
+    dev: false
 
   /lodash.sortby/4.7.0:
     resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}

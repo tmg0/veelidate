@@ -60,7 +60,7 @@ export class Validator<T extends Record<string, any>> {
   get value () {
     const fields: Record<string, any> = mapValues(this._fields, (field: any) => {
       if (isField(field)) { return field.value }
-      if (isValidator(field)) { return field }
+      if (isValidator(field)) { return field.value }
 
       return field
     })
