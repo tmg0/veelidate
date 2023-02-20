@@ -2,6 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@nuxtjs/eslint-config-typescript': ^12.0.0
+  '@types/lodash.forin': ^4.4.7
+  '@types/lodash.setwith': ^4.3.7
   eslint: ^8.34.0
   lodash.forin: ^4.4.0
   lodash.setwith: ^4.3.2
@@ -15,6 +17,8 @@ dependencies:
 
 devDependencies:
   '@nuxtjs/eslint-config-typescript': 12.0.0_7kw3g6rralp5ps6mg3uyzz6azm
+  '@types/lodash.forin': 4.4.7
+  '@types/lodash.setwith': 4.3.7
   eslint: 8.34.0
   tsup: 6.6.3_typescript@4.9.5
   typescript: 4.9.5
@@ -564,6 +568,22 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/lodash.forin/4.4.7:
+    resolution: {integrity: sha512-tA720kKO92mppEU95g1Ecbn3d7qMOCzaaac3/V0cDoq7Ezq0T5oP98fPj4ULjWaQyiEmjabi2B7hVexIqga0bg==}
+    dependencies:
+      '@types/lodash': 4.14.191
+    dev: true
+
+  /@types/lodash.setwith/4.3.7:
+    resolution: {integrity: sha512-wNTCK+UCQnz0yrYFy9glprZkQd9NM0iqexXg+0m4u142+ZYKUlvMwJQbaV8ZJLMIr0EluuLgdeWYeRuh16zlrg==}
+    dependencies:
+      '@types/lodash': 4.14.191
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
   /@types/node/18.14.0:
