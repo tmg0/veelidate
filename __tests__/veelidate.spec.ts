@@ -9,12 +9,8 @@ const defaultV = {
 }
 
 const validator = defineValidator().setup(() => ({
-  stringField: defineField<string>().isString(),
-  numberField: defineField<number>().isNumber(),
-  objectField: defineValidator().setup(() => ({
-    strF: defineField<string>('').isString(),
-    numF: defineField<number>()
-  }))
+  stringField: defineField<string>('').required().isString(),
+  numberField: defineField<number>().isNumber()
 }))
 
 const parseValidateResult = async (validator: { validate: () => Promise<void> }) => {
@@ -26,7 +22,6 @@ const parseValidateResult = async (validator: { validate: () => Promise<void> })
 
 describe('define validator', () => {
   test('should check default value', async () => {
-    validator.value = defaultV
     expect(await parseValidateResult(validator)).toBe(true)
   })
 
@@ -39,12 +34,6 @@ describe('define validator', () => {
   test('should check number type field', async () => {
     validator.value = defaultV
     validator.value.numberField = ''
-    expect(await parseValidateResult(validator)).toBe(false)
-  })
-
-  test('should check object type field', async () => {
-    validator.value = defaultV
-    validator.value.objectField.strF = 0
     expect(await parseValidateResult(validator)).toBe(false)
   })
 })

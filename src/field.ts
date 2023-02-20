@@ -5,6 +5,7 @@ export const isField = (value: any): value is Field => value.constructor === Fie
 export class Field<T = any> {
   public value: T
   public chains: FieldValidate[] = []
+  public _required = false
   public _min?: number
   public _max?: number
   public _maxLength?: number
@@ -14,6 +15,7 @@ export class Field<T = any> {
   }
 
   required () {
+    this._required = true
     this.chains.push(FieldValidate.REQUIRED)
     return this
   }

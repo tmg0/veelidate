@@ -13,7 +13,7 @@ export const validatorPolicy: Record<FieldValidate, (params: Field) => boolean> 
   min: (field: Field) => !!(field && isNumber(field.value) && field.value > Number(field._min)),
   max: (field: Field) => !!(field && isNumber(field.value) && field.value < Number(field._max)),
   maxLength: (field: Field) => validatorPolicy.isArray(field.value) && field.value.length < Number(field._maxLength),
-  required: (field: Field) => isUndefined(field.value)
+  required: (field: Field) => !isUndefined(field.value)
 }
 
 export const validateFeilds = <T extends Record<string, any>>(fields: T): Promise<void> => {
@@ -23,6 +23,8 @@ export const validateFeilds = <T extends Record<string, any>>(fields: T): Promis
   return new Promise((resolve, reject) => {
     for (const [key, field] of Object.entries(fields)) {
       if (isField(field)) {
+        if (!field._required && isUndefined(field.value)) { continue }
+
         for (const step of field.chains) {
           if (!validatorPolicy[step](fields[key])) {
             valid = false
