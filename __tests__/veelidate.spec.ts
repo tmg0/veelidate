@@ -1,19 +1,21 @@
 // @ts-nocheck
 
 import { describe, expect, test } from 'vitest'
-import { defineValidator, defineField } from '../index'
+import { defineValidator as v, defineField as f } from '../index'
 
-const defaultV = {
-  stringField: '',
-  numberField: 0
-}
-
-const validator = defineValidator().setup(() => ({
-  stringField: defineField<string>('').required().isString().message('stringField error'),
-  numberField: defineField<number>().isNumber()
+const eg1 = v().setup(() => ({
+  str: f<string>().isString(),
+  num: f<number>().isNumber()
 }))
 
-const parseValidateResult = async (validator: { validate: () => Promise<void> }) => {
+const eg2 = v().setup(() => ({
+  obj: v().setup(() => ({
+    str: f<string>().isString(),
+    num: f<number>().isNumber()
+  }))
+}))
+
+const pVR = async (validator: { validate: () => Promise<void> }) => {
   try {
     await validator.validate()
     return true
@@ -24,18 +26,18 @@ const parseValidateResult = async (validator: { validate: () => Promise<void> })
 
 describe('define validator', () => {
   test('should check default value', async () => {
-    expect(await parseValidateResult(validator)).toBe(true)
+    expect(await pVR(eg1)).toBe(true)
   })
 
   test('should check string type field', async () => {
-    validator.value = defaultV
+    validator.value = { str: '', num: 0 }
     validator.value.stringField = 0
-    expect(await parseValidateResult(validator)).toBe(false)
+    expect(await pVR(eg1)).toBe(false)
   })
 
   test('should check number type field', async () => {
-    validator.value = defaultV
+    validator.value = { str: '', num: 0 }
     validator.value.numberField = ''
-    expect(await parseValidateResult(validator)).toBe(false)
+    expect(await pVR(validator)).toBe(false)
   })
 })
