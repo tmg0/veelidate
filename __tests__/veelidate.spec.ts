@@ -9,7 +9,7 @@ const defaultV = {
 }
 
 const validator = defineValidator().setup(() => ({
-  stringField: defineField<string>('').required().isString(),
+  stringField: defineField<string>('').required().isString().message('stringField error'),
   numberField: defineField<number>().isNumber()
 }))
 
@@ -17,7 +17,9 @@ const parseValidateResult = async (validator: { validate: () => Promise<void> })
   try {
     await validator.validate()
     return true
-  } catch { return false }
+  } catch (error) {
+    return false
+  }
 }
 
 describe('define validator', () => {

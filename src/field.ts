@@ -9,6 +9,7 @@ export class Field<T = any> {
   public _min?: number
   public _max?: number
   public _maxLength?: number
+  public _message?: string
 
   constructor (value?: any) {
     this.value = value
@@ -45,6 +46,11 @@ export class Field<T = any> {
   maxLength ({ _maxLength }: this) {
     this._maxLength = _maxLength
     this.chains.push(FieldValidate.MAX_LENGTH)
+    return this
+  }
+
+  message (msg: string) {
+    this._message = msg
     return this
   }
 }

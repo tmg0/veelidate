@@ -20,6 +20,8 @@ export const validateFeilds = <T extends Record<string, any>>(fields: T): Promis
   let valid = true
   let hasValidator = false
 
+  let error: any
+
   return new Promise((resolve, reject) => {
     for (const [key, field] of Object.entries(fields)) {
       if (isField(field)) {
@@ -32,7 +34,10 @@ export const validateFeilds = <T extends Record<string, any>>(fields: T): Promis
           }
         }
 
-        if (!valid) { break }
+        if (!valid) {
+          error = field._message || field
+          break
+        }
       }
 
       if (isValidator(field)) {
@@ -44,7 +49,7 @@ export const validateFeilds = <T extends Record<string, any>>(fields: T): Promis
       }
     }
 
-    if (!hasValidator) { valid ? resolve() : reject(valid) }
+    if (!hasValidator) { valid ? resolve() : reject(error) }
   })
 }
 
