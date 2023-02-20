@@ -11,8 +11,8 @@ const defineValidator = () => ({
       set (target: Record<string, any>, key: string, value) {
         if (!isValue(key)) { return true }
 
-        forIn(value, (v: any, key: string) => {
-          setWith(target.value, key, v)
+        forIn(value, (v: any, k: string) => {
+          setWith(target.value, k, v)
         })
 
         return true
