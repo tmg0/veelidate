@@ -1,6 +1,6 @@
 import { FieldValidate } from './enums'
 import { Field, isField } from './field'
-import { isNumber, isString, isUndefined, mapValues } from './utils'
+import { isNumber, isPromise, isString, isUndefined, mapValues } from './utils'
 
 export type ValidatorFields<T> = { [P in keyof T]: T[P] extends Field ? T[P]['value'] : T[P] extends Validator<any> ? ValidatorFields<T[P]> : any }
 
@@ -18,7 +18,8 @@ export const validatorPolicy: Record<FieldValidate, (params: Field) => boolean> 
 
 export const validateFeilds = <T extends Record<string, any>>(fields: T): Promise<void> => {
   let valid = true
-  let hasValidator = false
+  let isDeep = false
+  let hasAsyncValidator = false
 
   let error: any
 
@@ -34,6 +35,24 @@ export const validateFeilds = <T extends Record<string, any>>(fields: T): Promis
           }
         }
 
+        for (const v of field._validators) {
+          const res = v(field.value)
+
+          if (!isPromise(res) && !res) {
+            valid = false
+          }
+
+          if (isPromise(res)) {
+            hasAsyncValidator = true
+            res.then((promiseRes) => {
+              if (!promiseRes) {
+                valid = false
+                reject(valid)
+              }
+            })
+          }
+        }
+
         if (!valid) {
           error = field._message || field
           break
@@ -41,7 +60,7 @@ export const validateFeilds = <T extends Record<string, any>>(fields: T): Promis
       }
 
       if (isValidator(field)) {
-        hasValidator = true
+        isDeep = true
         field.validate().then(resolve).catch(() => {
           valid = false
           reject(valid)
@@ -49,7 +68,7 @@ export const validateFeilds = <T extends Record<string, any>>(fields: T): Promis
       }
     }
 
-    if (!hasValidator) { valid ? resolve() : reject(error) }
+    if (!isDeep && !hasAsyncValidator) { valid ? resolve() : reject(error) }
   })
 }
 

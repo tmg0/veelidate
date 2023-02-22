@@ -2,6 +2,8 @@ import { FieldValidate } from './enums'
 
 export const isField = (value: any): value is Field => value.constructor === Field
 
+export type CustomValidator = (value: any) => Promise<boolean> | boolean
+
 export class Field<T = any> {
   public value: T
   public chains: FieldValidate[] = []
@@ -10,6 +12,7 @@ export class Field<T = any> {
   public _max?: number
   public _maxLength?: number
   public _message?: string
+  public _validators: CustomValidator[] = []
 
   constructor (value?: any) {
     this.value = value
@@ -51,6 +54,11 @@ export class Field<T = any> {
 
   message (msg: string) {
     this._message = msg
+    return this
+  }
+
+  validator (v: CustomValidator) {
+    this._validators.push(v)
     return this
   }
 }

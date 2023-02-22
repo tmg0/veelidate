@@ -15,6 +15,12 @@ const eg2 = v().setup(() => ({
   }))
 }))
 
+const eg3 = v().setup(() => ({
+  str: f<string>('ERROR').required().isString().validator(() => {
+    return Promise.resolve(false)
+  })
+}))
+
 const pVR = async (validator: { validate: () => Promise<void> }) => {
   try {
     await validator.validate()
@@ -48,5 +54,9 @@ describe('define validator', () => {
   test('should deep clone in validator object', async () => {
     eg2.value = { obj: { str: 0 } }
     expect(await pVR(eg2)).toBe(false)
+  })
+
+  test('should not pass custom validator', async () => {
+    expect(await pVR(eg3)).toBe(false)
   })
 })
