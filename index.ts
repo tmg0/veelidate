@@ -1,7 +1,7 @@
 import forIn from 'lodash.forin'
 import setWith from 'lodash.setwith'
-import { Validator, ValidatorFields } from './src/validator'
-import { Field } from './src/field'
+import { Validator, ValidatorFields, isValidator } from './src/validator'
+import { Field, isField } from './src/field'
 
 const isValue = (value: string): value is 'value' => value === 'value'
 
@@ -25,4 +25,4 @@ const defineField = <T>(value?: T) => {
   return new Field<T>(value)
 }
 
-export { defineValidator, defineField, Validator, Field, ValidatorFields }
+export { defineValidator, defineField, isField, isValidator, Validator, Field, ValidatorFields }
